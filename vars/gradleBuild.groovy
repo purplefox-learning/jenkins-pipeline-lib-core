@@ -1,14 +1,11 @@
 #!groovy
 
-//optional arguments: tasks=clean build, level=info, test=true, options=xxx
-//bat 'gradlew --info build -x test'
+//call from Jenkinsfile: gradleBuild(tasks: 'clean build', outputLevel: 'debug', includeTest:'false')
 def call(args) {
 
-    bat 'echo i am called from testLib.groovy in jenkins-pipeline-lib-core'
-
     final String tasks = args?.'tasks'?:'build'
-    final String outputLevel = args?.'level'?:'info'
-    final String includeTest = args?.'test'?:'true'
+    final String outputLevel = args?.'outputLevel'?:'info'
+    final String includeTest = args?.'includeTest'?:'true'
     final String remainingOptions = args?.'options'?:''
 
     String finalGradlewCommand
@@ -17,6 +14,7 @@ def call(args) {
     if (includeTest.equals('false')) testOption= '-x test'
     else testOption = ''
 
+    //this is the final gradlew command that we pass to jenkins' underlying system
     finalGradlewCommand = gradlewCore + ' ' + outputLevelOption + ' ' + tasks + ' ' + testOption + ' ' + remainingOptions
     bat finalGradlewCommand
 }
