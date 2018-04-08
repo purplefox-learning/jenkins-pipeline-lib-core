@@ -1,5 +1,5 @@
 #!groovy
 
 def call(args) {
-    bat 'echo i am called from testLib.groovy in jenkins-pipeline-lib-core'
+    bat 'echo testLib in jenkins-pipeline-lib-core is called'
 }
